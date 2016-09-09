@@ -1,6 +1,5 @@
-'use strict';
-
 describe('myApp.search module', function() {
+  'use strict';
 
   beforeEach(module('myApp.search'));
 
