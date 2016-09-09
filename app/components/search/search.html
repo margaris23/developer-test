@@ -1,0 +1,31 @@
+<form name="sc.form" id="search" novalidate>
+	<label>Origin:
+		<input list="origin" name="origin" required
+			ng-model="sc.flight.origin"
+			ng-model-options="{ debounce: 250 }" /></label>
+	<datalist id="origin">
+		<option value="Chrome">
+		<option value="Firefox">
+		<option value="Internet Explorer">
+		<option value="Opera">
+		<option value="Safari">
+		<option value="Microsoft Edge">
+	</datalist>
+
+	<input type="date" name="dateStart" ng-model="sc.flight.dateStart" />
+
+	<label>Destination:
+	<input list="destination" name="destination" required ng-model="sc.flight.destination" /></label>
+	<datalist id="destination">
+		<option value="Chrome">
+		<option value="Firefox">
+		<option value="Internet Explorer">
+		<option value="Opera">
+		<option value="Safari">
+		<option value="Microsoft Edge">
+	</datalist>
+	{{search.flight}}
+	<input type="date" name="dateEnd" ng-model="sc.flight.dateEnd" />
+
+	<input type="submit" ng-click="sc.go()" value="Search">
+</form>
