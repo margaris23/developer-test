@@ -8,6 +8,7 @@
   "devDependencies": {
     "bower": "^1.7.7",
     "grunt": "^1.0.1",
+    "grunt-contrib-connect": "^1.0.2",
     "grunt-contrib-jshint": "^1.0.0",
     "grunt-contrib-less": "^1.4.0",
     "grunt-karma": "^2.0.0",
@@ -25,7 +26,7 @@
   "scripts": {
     "postinstall": "bower install",
     "prestart": "npm install",
-    "start": "grunt less; http-server -a localhost -p 8000 -c-1 ./app",
+    "start": "grunt serve",
     "pretest": "npm install",
     "test": "grunt test",
     "test-single-run": "karma start karma.conf.js --single-run",
