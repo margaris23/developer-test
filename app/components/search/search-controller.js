@@ -1,6 +1,6 @@
 angular.module('myApp.search.controller', ['myApp.search.service'])
 
-.controller('SearchCtrl', ['SearchSvc', function(SearchSvc) {
+.controller('SearchCtrl', ['SearchSvc', function (SearchSvc) {
     var vm = this;
 
     vm.flight = {
@@ -18,28 +18,32 @@ angular.module('myApp.search.controller', ['myApp.search.service'])
         // TBD...
     };
 
-    vm.update = function (option, searchValue) {
-        switch(option) {
-        case 1:
+    vm.getOrigins = function (searchValue) {
+        if(!searchValue) {
+            return;
+        }
 
-            if(!searchValue) {
-                return;
-            }
-
-            SearchSvc.getOrigins(searchValue)
-
+        SearchSvc
+            .getOrigins(searchValue)
             .then(function(result) {
                 console.log(result.airports);
                 vm.airports = result.airports;
                 vm.routes = result.routes;
             });
+    };
 
-            break;
-        case 2:
-            break;
-        default:
-            console.error('unknown options');
-        }
+    vm.onOriginSelected = function (origin) {
+        /* cleanup selected destination first */
+        vm.routes = [];
+        vm.flight.destination = null;
+
+        /* and then search */
+        SearchSvc
+            .getDestinations(origin)
+            .then(function (result) {
+                vm.routes = result.routes;
+                vm.flight.destination = vm.routes[0];
+            });
     };
 
 }]);

@@ -26,22 +26,19 @@ angular.module('myApp.api', [])
         airports: function () {
             var deferred = $q.defer();
 
-            var config = {};
+            $http.get(IATA)
+                .then(function successCb(result) {
+                    console.log('Got airport results! :)');
 
-            $http.get(IATA, config)
+                    deferred.resolve({
+                        airports: result.data.airports,
+                        routes: result.data.routes
+                    });
 
-            .then(function successCb(result) {
-                console.log('Got airport results! :)');
-
-                deferred.resolve({
-                    airports: result.data.airports,
-                    routes: result.data.routes
+                }, function errorCb(error) {
+                    console.error('Error getting results:', error);
+                    deferred.reject(error);
                 });
-
-            }, function errorCb(error) {
-                console.error('Error getting results:', error);
-                deferred.reject(error);
-            });
 
             return deferred.promise;
         },
@@ -60,17 +57,14 @@ angular.module('myApp.api', [])
                 .replace('%start%', start)
                 .replace('%end%', end);
 
-            var config = {};
-
-            $http.get(url, config)
-
-            .then(function successCb(result) {
-                console.log('Got cheap flight results! :)');
-                deferred.resolve(result.data);
-            }, function errorCb(error) {
-                console.error('Error getting results:', error);
-                deferred.reject(error);
-            });
+            $http.get(url)
+                .then(function successCb(result) {
+                    console.log('Got cheap flight results! :)');
+                    deferred.resolve(result.data);
+                }, function errorCb(error) {
+                    console.error('Error getting results:', error);
+                    deferred.reject(error);
+                });
 
             return deferred.promise;
         }
