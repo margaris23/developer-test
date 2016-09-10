@@ -1,20 +1,47 @@
-angular.module('myApp.search.service', [])
+angular.module('myApp.search.service', [ 'myApp.api' ])
 
-.factory('SearchSvc', [ '$q', function ($q) {
-	return {
-		getOrigins: function () {
-			var deferred = $q.defer();
+.factory('SearchSvc', [
+    '$q',
+    '$cacheFactory',
+    'ApiSvc',
 
-			// simulate for now
-			setTimeout(function() {
-				deferred.resolve([]);
-			}, 1000);
+    function ($q, $cacheFactory, ApiSvc) {
 
-			return deferred.promise;
-		},
+        return {
+            getOrigins: function (predicate) {
+                var deferred = $q.defer();
 
-		getDestinations: function (origin) {
-			// TBD...
-		}
-	};
+                ApiSvc.airports()
+
+                .then(function (result) {
+
+                    /* filter airports */
+                    var reply = {
+                        airports: [],
+                        routes: [] //TBD
+                    };
+
+                    reply.airports = result.airports
+                        .map(function (airport) {
+                            return {
+                                name: airport.name,
+                                code: airport.iataCode,
+                                fullName: airport.name + ' ' + airport.iataCode
+                            };
+                        })
+                        .filter(function (airport) {
+                            return airport.fullName.match(predicate);
+                        });
+
+                    deferred.resolve(reply);
+
+                }, deferred.reject);
+
+                return deferred.promise;
+            },
+
+            getDestinations: function (origin) {
+                // TBD...
+            }
+        };
 }]);

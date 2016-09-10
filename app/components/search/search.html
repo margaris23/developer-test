@@ -1,31 +1,44 @@
 <form name="sc.form" id="search" novalidate>
-	<label>Origin:
-		<input list="origin" name="origin" required
-			ng-model="sc.flight.origin"
-			ng-model-options="{ debounce: 250 }" /></label>
-	<datalist id="origin">
-		<option value="Chrome">
-		<option value="Firefox">
-		<option value="Internet Explorer">
-		<option value="Opera">
-		<option value="Safari">
-		<option value="Microsoft Edge">
-	</datalist>
 
-	<input type="date" name="dateStart" ng-model="sc.flight.dateStart" />
+    <!--<label>Origin:
+        <input list="origin" name="origin" required autocomplete="off"
+            ng-model="sc.flight.origin"
+            ng-change="sc.update(1)"
+            ng-model-options="{ debounce: 250 }" />
+    </label>
+    <datalist id="origin">
+        <option value="{{airport}}" ng-repeat="airport in sc.airports">
+    </datalist>
+-->
+    <ui-select ng-model="sc.flight.origin.selected" theme="select2" style="width: 300px;" title="Flying from...">
+        <ui-select-match placeholder="Flying from...">{{$select.selected.name}}</ui-select-match>
+        <ui-select-choices
+            repeat="airport in sc.airports"
+            refresh="sc.update(1, $select.search)"
+            refresh-delay="200"
+            minimum-input-length="2">
+            <span ng-bind-html="airport.name | highlight: $select.search"></span>
+            <small ng-bind-html="airport.code | highlight: $select.search"></small>
+        </ui-select-choices>
+    </ui-select>
 
-	<label>Destination:
-	<input list="destination" name="destination" required ng-model="sc.flight.destination" /></label>
-	<datalist id="destination">
-		<option value="Chrome">
-		<option value="Firefox">
-		<option value="Internet Explorer">
-		<option value="Opera">
-		<option value="Safari">
-		<option value="Microsoft Edge">
-	</datalist>
-	{{search.flight}}
-	<input type="date" name="dateEnd" ng-model="sc.flight.dateEnd" />
+    <input type="date" name="dateStart" ng-model="sc.flight.dateStart" />
 
-	<input type="submit" ng-click="sc.go()" value="Search">
+    <label>Destination:
+        <input list="destination" name="destination" required
+            ng-model="sc.flight.destination"
+            ng-change="sc.update(2)" />
+    </label>
+    <datalist id="destination">
+        <option value="Chrome">
+        <option value="Firefox">
+        <option value="Internet Explorer">
+        <option value="Opera">
+        <option value="Safari">
+        <option value="Microsoft Edge">
+    </datalist>
+
+    <input type="date" name="dateEnd" ng-model="sc.flight.dateEnd" />
+
+    <input type="submit" ng-click="sc.go()" value="Search">
 </form>

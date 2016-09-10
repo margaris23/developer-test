@@ -1,6 +1,9 @@
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
   'ngRoute',
+  'ui.select',
+  'ngSanitize',
+  'myApp.api',
   'myApp.search',
   'myApp.version'
 ]).
