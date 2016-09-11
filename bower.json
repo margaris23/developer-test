@@ -12,7 +12,8 @@
     "angular-mocks": "~1.5.0",
     "html5-boilerplate": "^5.3.0",
     "angular-sanitize": "^1.5.8",
-    "angular-ui-select": "^0.19.4"
+    "angular-ui-select": "^0.19.4",
+    "angularjs-datepicker": "^2.1.6"
   },
   "devDependencies": {
     "angular-sanitize": "^1.5.8"

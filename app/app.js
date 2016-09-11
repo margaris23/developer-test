@@ -3,6 +3,7 @@ angular.module('myApp', [
   'ngRoute',
   'ui.select',
   'ngSanitize',
+  '720kb.datepicker',
   'myApp.api',
   'myApp.search',
   'myApp.version'

@@ -13,7 +13,11 @@
         </ui-select-choices>
     </ui-select>
 
-    <input type="date" name="dateStart" ng-model="sc.flight.dateStart" />
+    <div style="width:200px;">
+        <datepicker date-format="yyyy/MM/dd" date-refocus="true">
+            <input ng-model="sc.flight.dateStart" type="text" name="dateStart" ng-change="sc.startDateChanged()" />
+        </datepicker>
+    </div>
 
     <ui-select ng-model="sc.flight.destination.selected" theme="select2" search-enabled="false" style="width: 300px;" title="Flying to...">
         <ui-select-match placeholder="Flying to...">{{$select.selected.fullName}}</ui-select-match>
@@ -23,7 +27,11 @@
         </ui-select-choices>
     </ui-select>
 
-    <input type="date" name="dateEnd" ng-model="sc.flight.dateEnd" />
+    <div style="width:200px;">
+        <datepicker date-format="yyyy/MM/dd" date-refocus="true">
+            <input name="dateEnd" ng-model="sc.flight.dateEnd" type="text" ng-change="sc.endDateChanged()" />
+        </datepicker>
+    </div>
 
     <input type="submit" ng-click="sc.go()" value="Search">
 
