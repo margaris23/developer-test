@@ -10,12 +10,28 @@ angular.module('myApp.api', [])
         INVALID_DATA: 'INVALID_DATA'
     };
 
-    function isValidInput(from, to) {
-        if (!from || !to) {
+    function isValidInput(from, to, start, end) {
+        if (!from || !to || !start || !end) {
             return false;
         }
-        //TBD...
-        return true;
+
+        /* iata codes should be 3 letters */
+        if(from.length !== 3 || to.length !== 3) {
+            return false;
+        }
+
+        /* date validations */
+        var startDate = Date.parse(start);
+        if(isNaN(startDate)) {
+            return false;
+        }
+
+        var endDate = Date.parse(end);
+        if(isNaN(endDate)) {
+            return false;
+        }
+
+        return endDate >= startDate;
     }
 
     return {
@@ -47,7 +63,7 @@ angular.module('myApp.api', [])
         cheapFlights: function (from, to, start, end) {
             var deferred = $q.defer();
 
-            if(!isValidInput(from, to)) {
+            if(!isValidInput(from, to, start, end)) {
                 deferred.reject(ERROR.INVALID_DATA);
                 return deferred.promise;
             }

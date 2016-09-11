@@ -15,14 +15,17 @@ angular.module('myApp.results.controller', ['myApp.api'])
     vm.loading = true;
     vm.dateFormat = 'yyyy-MM-dd (hh:mm)';
 
+    vm.message = 'Sorry, no cheap flights found.';
+
     ApiSvc.cheapFlights(search.from, search.to, search.start, search.end)
         .then(function (results) {
             vm.flights = results.flights;
             vm.loading = false;
         }, function (error) {
             if(error) {
-                console.error('Could not find cheap flights. Please try again later.');
+                vm.message = 'Could not find cheap flights. Please try again later.';
             }
+            vm.loading = false;
         });
 
 }]);

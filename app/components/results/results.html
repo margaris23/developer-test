@@ -9,6 +9,6 @@
             <div class="flight_img landing"></div>
             <span class="flight_date">{{::flight.dateTo | date:rc.dateFormat }}</span>
         </li>
-        <li class="flight_empty" ng-if="!rc.loading && rc.flights.length === 0">Sorry, no cheap flights found.</li>
+        <li class="flight_empty" ng-if="!rc.loading && rc.flights.length === 0">{{rc.message}}</li>
     </ul>
 </div>
