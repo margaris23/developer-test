@@ -13,7 +13,7 @@ angular.module('myApp.results.controller', ['myApp.api'])
 
     vm.flights = [];
     vm.loading = true;
-    vm.dateFormat = 'yyyy-MM-dd';
+    vm.dateFormat = 'yyyy-MM-dd (hh:mm)';
 
     ApiSvc.cheapFlights(search.from, search.to, search.start, search.end)
         .then(function (results) {
