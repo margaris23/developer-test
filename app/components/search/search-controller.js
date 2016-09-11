@@ -10,6 +10,11 @@ angular.module('myApp.search.controller', ['myApp.search.service'])
         dateEnd: null
     };
 
+    vm.visible = {
+        endDatePicker: false,
+        startDatePicker: false
+    };
+
     vm.dateFormat = 'yyyy-MM-dd';
 
     vm.airports = [];
@@ -64,13 +69,23 @@ angular.module('myApp.search.controller', ['myApp.search.service'])
     };
 
     vm.startDateChanged = function () {
-        if(!vm.flight.dateStart || !vm.flight.dateEnd) {
+        if(vm.visible.startDatePicker) {
+            vm.toggleCalendar(1);
+        }
+
+        if(!vm.flight.dateStart) {
             return;
         }
 
         // TODO: validate date
 
         var startDate = stripDashes(vm.flight.dateStart);
+
+        if(!vm.flight.dateEnd) {
+            vm.flight.dateEnd = vm.flight.dateStart;
+            return;
+        }
+
         var endDate = stripDashes(vm.flight.dateEnd);
 
         if (startDate > endDate) {
@@ -79,17 +94,40 @@ angular.module('myApp.search.controller', ['myApp.search.service'])
     };
 
     vm.endDateChanged = function () {
-        if(!vm.flight.dateStart || !vm.flight.dateEnd) {
+        if(vm.visible.endDatePicker) {
+            vm.toggleCalendar(2);
+        }
+
+        if(!vm.flight.dateEnd) {
             return;
         }
 
         // TODO: validate date
 
         var endDate = stripDashes(vm.flight.dateEnd);
+
+        if(!vm.flight.dateStart) {
+            vm.flight.dateStart = vm.flight.dateEnd;
+            return;
+        }
+
         var startDate = stripDashes(vm.flight.dateStart);
 
         if (endDate < startDate) {
             vm.flight.dateStart = vm.flight.dateEnd;
+        }
+    };
+
+    vm.toggleCalendar = function (option) {
+        switch(option){
+        case 1:
+            vm.visible.startDatePicker = !vm.visible.startDatePicker;
+            break;
+        case 2:
+            vm.visible.endDatePicker = !vm.visible.endDatePicker;
+            break;
+        default:
+            /* noop */
         }
     };
 

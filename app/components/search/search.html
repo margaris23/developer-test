@@ -1,6 +1,7 @@
-<form name="sc.form" id="search" novalidate>
+<form class="form_search" name="sc.form" id="search" novalidate>
 
-    <ui-select ng-model="sc.flight.origin.selected" theme="select2" style="width: 300px;" title="Flying from..."
+  <div class="form_group">
+    <ui-select ng-model="sc.flight.origin.selected" theme="select2" class="form_element" title="Flying from..."
         on-select="sc.onOriginSelected($select.selected.code)">
         <ui-select-match placeholder="Flying from..." >{{$select.selected.fullName}}</ui-select-match>
         <ui-select-choices
@@ -13,13 +14,20 @@
         </ui-select-choices>
     </ui-select>
 
-    <div style="width:200px;">
-        <datepicker date-format="{{sc.dateFormat}}" date-refocus="true">
-            <input ng-model="sc.flight.dateStart" type="text" name="dateStart" ng-change="sc.startDateChanged()" />
+    <div class="form_element">
+        <datepicker date-format="{{sc.dateFormat}}" date-refocus="true" selector="form_date"
+                datepicker-toggle="false" datepicker-show="{{sc.visible.startDatePicker}}">
+            <div class="form_calendar" ng-click="sc.toggleCalendar(1)"></div>
+            <input class="form_date" ng-class="{'empty': !sc.flight.dateStart}"
+                type="text" name="dateStart" disabled placeholder="&leftarrow; choose date..."
+                ng-model="sc.flight.dateStart" ng-change="sc.startDateChanged()" />
         </datepicker>
     </div>
+  </div>
 
-    <ui-select ng-model="sc.flight.destination.selected" theme="select2" search-enabled="false" style="width: 300px;" title="Flying to...">
+  <div class="form_group">
+    <ui-select ng-model="sc.flight.destination.selected" theme="select2" search-enabled="false"
+            class="form_element" title="Flying to...">
         <ui-select-match placeholder="Flying to...">{{$select.selected.fullName}}</ui-select-match>
         <ui-select-choices repeat="route in sc.routes">
             <span ng-bind-html="route.name | highlight: $select.search"></span>
@@ -27,12 +35,21 @@
         </ui-select-choices>
     </ui-select>
 
-    <div style="width:200px;">
-        <datepicker date-format="{{sc.dateFormat}}" date-refocus="true">
-            <input name="dateEnd" ng-model="sc.flight.dateEnd" type="text" ng-change="sc.endDateChanged()" />
+    <div class="form_element">
+        <datepicker date-format="{{sc.dateFormat}}" date-refocus="true" selector="form_date"
+                datepicker-toggle="false" datepicker-show="{{sc.visible.endDatePicker}}">
+            <div class="form_calendar" ng-click="sc.toggleCalendar(2)"></div>
+            <input class="form_date" ng-class="{'empty': !sc.flight.dateEnd}"
+                name="dateEnd" type="text" disabled placeholder="&leftarrow; choose date..."
+                ng-model="sc.flight.dateEnd" ng-change="sc.endDateChanged()" />
         </datepicker>
     </div>
+  </div>
 
-    <input type="submit" ng-click="sc.go()" value="Search">
+  <div class="form_group center-content">
+    <a class="form_button" type="submit" ng-click="sc.go()" value="Search">
+        <span class="form_button_text">Search</span>
+    </a>
+  </div>
 
 </form>
