@@ -6,5 +6,5 @@
     'myApp.version.version-directive'
   ])
 
-  .value('version', '0.8');
+  .value('version', '0.9');
 })();

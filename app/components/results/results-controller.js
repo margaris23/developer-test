@@ -19,6 +19,10 @@ angular.module('myApp.results.controller', ['myApp.api'])
         .then(function (results) {
             vm.flights = results.flights;
             vm.loading = false;
+        }, function (error) {
+            if(error) {
+                console.error('Could not find cheap flights. Please try again later.');
+            }
         });
 
 }]);

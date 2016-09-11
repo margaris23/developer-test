@@ -1,21 +1,39 @@
 .results {
     text-align: center;
+    max-width: 500px;
+    margin: auto;
 
     .flights {
         list-style-type: none;
         display: flex;
         flex-direction: column;
+        -webkit-padding-start: 0;
+        padding: 0;
 
         .flight {
             display: flex;
-            margin: 5px 0;
             flex: 1;
+            align-items: center;
+            border-bottom: 1px solid #3498db;
+            cursor: pointer;
+            padding-top: 5px;
+            padding-bottom: 5px;
+
+            &:nth-child(odd) {
+                background: #e4f4ff;
+            }
+
+            &:hover {
+                background: #c7e3f7;
+            }
 
             .flight_img {
                 width: 32px;
+                min-width: 32px;
                 height: 32px;
                 display: inline-block;
                 float: left;
+                margin-left: 10px;
 
                 &.takeoff {
                     background:url(../components/results/icons/plane-takeoff.png) top left repeat-x;
@@ -32,12 +50,15 @@
             }
 
             .flight_price {
-
+                display: block;
+                width: 50px;
+                min-width: 50px;
             }
         }
 
         .flight_empty {
-
+            font-size: large;
+            opacity: 0.8;
         }
     }    
 }
