@@ -6,6 +6,7 @@ angular.module('myApp', [
   '720kb.datepicker',
   'myApp.api',
   'myApp.search',
+  'myApp.results',
   'myApp.version'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {

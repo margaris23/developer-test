@@ -4,7 +4,10 @@ module.exports = {
         path: 'app/less'
     },
     files: {
-      'app/css/styles.css': 'app/less/styles.less'
+      'app/css/styles.css': [
+        'app/less/styles.less',
+        'app/components/**/styles/*.less'
+      ]
     }
   }
 };

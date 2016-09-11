@@ -4,9 +4,9 @@ angular.module('myApp.api', [])
     'use strict';
 
     var IATA = 'https://murmuring-ocean-10826.herokuapp.com/en/api/2/forms/flight-booking-selector/';
-    var CHEAP_FLIGHTS = 'https://murmuring-ocean-10826.herokuapp.com/en/api/2/flights/from/%origin%/to/%dest%/%start%/%end/250/unique/?limit=15&offset-0';
+    var CHEAP_FLIGHTS = 'https://murmuring-ocean-10826.herokuapp.com/en/api/2/flights/from/%origin%/to/%dest%/%start%/%end%/250/unique/?limit=15&offset-0';
 
-    var ERROR_CODES = {
+    var ERROR = {
         INVALID_DATA: 'INVALID_DATA'
     };
 
@@ -15,12 +15,13 @@ angular.module('myApp.api', [])
             return false;
         }
         //TBD...
+        return true;
     }
 
     return {
 
         errorCodes: function () {
-            return angular.copy(ERROR_CODES);
+            return angular.copy(ERROR);
         },
 
         airports: function () {
@@ -44,10 +45,11 @@ angular.module('myApp.api', [])
         },
 
         cheapFlights: function (from, to, start, end) {
-            var deferred = $q.defer;
+            var deferred = $q.defer();
 
             if(!isValidInput(from, to)) {
-                return deferred.reject(ERROR.INVALID_DATA);
+                deferred.reject(ERROR.INVALID_DATA);
+                return deferred.promise;
             }
 
             /* comstruct url */

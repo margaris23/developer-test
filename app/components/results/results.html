@@ -1,0 +1,12 @@
+<h3>Cheap flights</h3>
+<div class="loading" ng-if="rc.loading">...loading</div>
+<ul class="flights">
+    <li class="flight" ng-repeat='flight in rc.flights'>
+        <img class="flight-from_img">
+        <span class="flight-from_date">{{::flight.dateFrom | date:rc.dateFormat }}</span>
+        <img class="flight-to_img">
+        <span class="flight-to_date">{{::flight.dateTo | date:rc.dateFormat }}</span>
+        <span class="flight_price">{{::flight.price | number:0 }} {{::flight.currency}}</span>
+    </li>
+    <li class="flight_empty" ng-if="!rc.loading && rc.flights.length === 0">Sorry, no cheap flights found.</li>
+</ul>

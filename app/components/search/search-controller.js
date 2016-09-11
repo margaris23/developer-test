@@ -19,25 +19,21 @@ angular.module('myApp.search.controller', ['myApp.search.service'])
         return strDate.replace(/-/g, '');
     }
 
-    function constructUrlParams() {
-        return [
-            'from=' + vm.flight.origin,
-            'to=' + vm.flight.destination,
-            'start=' + vm.flight.dateStart,
-            'end=' + vm.flight.dateEnd
-        ].join('&');
-    }
-
     vm.go = function () {
         if (!vm.flight.origin ||
             !vm.flight.destination ||
             !vm.flight.dateStart ||
             !vm.flight.dateEnd) {
+
             // TODO: show errors
             return;
         }
 
-        $location.path('/results?' + constructUrlParams());
+        $location.path('/results')
+            .search('from', vm.flight.origin.selected.code)
+            .search('to', vm.flight.destination.selected.code)
+            .search('start', vm.flight.dateStart)
+            .search('end', vm.flight.dateEnd);
     };
 
     vm.getOrigins = function (searchValue) {
