@@ -11,8 +11,20 @@ angular.module('myApp.search.service', [ 'myApp.api' ])
             return {
                 name: airport.name,
                 code: airport.iataCode,
-                fullName: airport.name + ' (' + airport.iataCode + ')'
+                fullName: airport.name + ' (' + airport.iataCode + ')',
+                countryName: airport.country.name
             };
+        }
+
+        function _contructRoutesData(routes, airports) {
+            var result = [];
+            for (var i = 0; i < airports.length; i++) {
+                var airport = airports[i];
+                if(routes.indexOf(airport.iataCode) > -1) {
+                    result.push(_createAirportObject(airport));
+                }
+            }
+            return result;
         }
 
         return {
@@ -28,7 +40,8 @@ angular.module('myApp.search.service', [ 'myApp.api' ])
                         reply.airports = result.airports
                             .map(_createAirportObject)
                             .filter(function matcher (airport) {
-                                return airport.fullName.match(predicate);
+                                return airport.fullName.toLowerCase()
+                                        .match(predicate.toLowerCase());
                             });
 
                         deferred.resolve(reply);
@@ -59,12 +72,7 @@ angular.module('myApp.search.service', [ 'myApp.api' ])
                         }
 
                         /* get destination airports data */
-                        for (var i = 0; i < result.airports.length; i++) {
-                            var airport = result.airports[i];
-                            if(routes.indexOf(airport.iataCode) > -1) {
-                                reply.routes.push(_createAirportObject(airport));
-                            }
-                        }
+                        reply.routes = _contructRoutesData(routes, result.airports);
 
                         deferred.resolve(reply);
                     }, deferred.reject);

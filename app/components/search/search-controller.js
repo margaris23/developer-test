@@ -20,17 +20,45 @@ angular.module('myApp.search.controller', ['myApp.search.service'])
     vm.airports = [];
     vm.routes = [];
 
+    /* cleaup errors initially */
+    errorCleanup();
+
+    function errorCleanup() {
+        vm.error = {
+            origin: null,
+            destination: null,
+            dateStart: null,
+            dateEnd: null
+        };
+    }
+
     function stripDashes(strDate) {
         return strDate.replace(/-/g, '');
     }
 
     vm.go = function () {
-        if (!vm.flight.origin ||
-            !vm.flight.destination ||
-            !vm.flight.dateStart ||
-            !vm.flight.dateEnd) {
 
-            // TODO: show errors
+        /* reset pickers */
+        vm.visible.endDatePicker = false;
+        vm.visible.startDatePicker = false;
+
+        if (!vm.flight.origin) {
+            vm.error.origin = "Invalid airport chosen.";
+            return;
+        }
+
+        if (!vm.flight.destination) {
+            vm.error.destination = "Invalid airport chosen.";
+            return;
+        }
+
+        if (!vm.flight.dateStart) {
+            vm.error.dateStart = "Invalid start date chosen.";
+            return;
+        }
+
+        if (!vm.flight.dateEnd) {
+            vm.error.dateEnd = "Invalid end date chosen.";
             return;
         }
 
@@ -51,6 +79,10 @@ angular.module('myApp.search.controller', ['myApp.search.service'])
             .then(function(result) {
                 vm.airports = result.airports;
                 vm.routes = result.routes;
+            }, function (error) {
+                if (error) {
+                    vm.error.destination = "Error finding airports. Please try again later.";
+                }
             });
     };
 
@@ -59,12 +91,17 @@ angular.module('myApp.search.controller', ['myApp.search.service'])
         vm.routes = [];
         vm.flight.destination = null;
 
+        errorCleanup();
+
         /* and then search */
         SearchSvc
             .getDestinations(origin)
             .then(function (result) {
                 vm.routes = result.routes;
-                vm.flight.destination = vm.routes[0];
+            }, function (error) {
+                if (error) {
+                    vm.error.destination = "Error finding destination. Please try again later.";
+                }
             });
     };
 
@@ -76,6 +113,8 @@ angular.module('myApp.search.controller', ['myApp.search.service'])
         if(!vm.flight.dateStart) {
             return;
         }
+
+        errorCleanup();
 
         // TODO: validate date
 
@@ -102,6 +141,8 @@ angular.module('myApp.search.controller', ['myApp.search.service'])
             return;
         }
 
+        errorCleanup();
+
         // TODO: validate date
 
         var endDate = stripDashes(vm.flight.dateEnd);
@@ -122,9 +163,21 @@ angular.module('myApp.search.controller', ['myApp.search.service'])
         switch(option){
         case 1:
             vm.visible.startDatePicker = !vm.visible.startDatePicker;
+
+            /* only one calendar should be visible */
+            if (vm.visible.startDatePicker && vm.visible.endDatePicker) {
+                vm.visible.endDatePicker = false;
+            }
+
             break;
         case 2:
             vm.visible.endDatePicker = !vm.visible.endDatePicker;
+
+            /* only one calendar should be visible */
+            if (vm.visible.startDatePicker && vm.visible.endDatePicker) {
+                vm.visible.startDatePicker = false;
+            }
+
             break;
         default:
             /* noop */

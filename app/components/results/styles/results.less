@@ -1,0 +1,43 @@
+.results {
+    text-align: center;
+
+    .flights {
+        list-style-type: none;
+        display: flex;
+        flex-direction: column;
+
+        .flight {
+            display: flex;
+            margin: 5px 0;
+            flex: 1;
+
+            .flight_img {
+                width: 32px;
+                height: 32px;
+                display: inline-block;
+                float: left;
+
+                &.takeoff {
+                    background:url(../components/results/icons/plane-takeoff.png) top left repeat-x;
+                }
+                
+                &.landing {
+                    background:url(../components/results/icons/plane-landing.png) top left repeat-x;
+                }
+            }
+
+            .flight_date {
+                display: block;
+                margin: 0 10px 5px 5px;
+            }
+
+            .flight_price {
+
+            }
+        }
+
+        .flight_empty {
+
+        }
+    }    
+}

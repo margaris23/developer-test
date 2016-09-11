@@ -1,7 +1,10 @@
 <form class="form_search" name="sc.form" id="search" novalidate>
 
+  <h3>Find cheap flights</h3>
+
   <div class="form_group">
-    <ui-select ng-model="sc.flight.origin.selected" theme="select2" class="form_element" title="Flying from..."
+    <ui-select ng-model="sc.flight.origin.selected" theme="select2" class="form_element"
+            title="Please choose an airport to flyout"
         on-select="sc.onOriginSelected($select.selected.code)">
         <ui-select-match placeholder="Flying from..." >{{$select.selected.fullName}}</ui-select-match>
         <ui-select-choices
@@ -9,42 +12,52 @@
             refresh="sc.getOrigins($select.search)"
             refresh-delay="200"
             minimum-input-length="2">
-            <span ng-bind-html="airport.name | highlight: $select.search"></span>
-            <small ng-bind-html="airport.code | highlight: $select.search"></small>
+            <span ng-bind-html="airport.name"></span> <span>({{airport.code}})</span>
+            <small>
+                <span ng-bind-html="airport.countryName"></span>
+            </small>
         </ui-select-choices>
     </ui-select>
-
-    <div class="form_element">
-        <datepicker date-format="{{sc.dateFormat}}" date-refocus="true" selector="form_date"
-                datepicker-toggle="false" datepicker-show="{{sc.visible.startDatePicker}}">
-            <div class="form_calendar" ng-click="sc.toggleCalendar(1)"></div>
-            <input class="form_date" ng-class="{'empty': !sc.flight.dateStart}"
-                type="text" name="dateStart" disabled placeholder="&leftarrow; choose date..."
-                ng-model="sc.flight.dateStart" ng-change="sc.startDateChanged()" />
-        </datepicker>
-    </div>
   </div>
+  <div class="form_error" ng-if="sc.error.origin">{{sc.error.origin}}</div>
 
   <div class="form_group">
     <ui-select ng-model="sc.flight.destination.selected" theme="select2" search-enabled="false"
             class="form_element" title="Flying to...">
         <ui-select-match placeholder="Flying to...">{{$select.selected.fullName}}</ui-select-match>
         <ui-select-choices repeat="route in sc.routes">
-            <span ng-bind-html="route.name | highlight: $select.search"></span>
-            <small ng-bind-html="route.code | highlight: $select.search"></small>
+            <span ng-bind-html="route.name"></span> <span>({{route.code}})</span>
+            <small>
+                <span ng-bind-html="route.countryName"></span>
+            </small>
         </ui-select-choices>
     </ui-select>
+  </div>
+  <div class="form_error" ng-if="sc.error.destination">{{sc.error.destination}}</div>
 
+  <div class="form_group">
+     <div class="form_element">
+        <datepicker date-format="{{sc.dateFormat}}" date-refocus="true" selector="form_date"
+                datepicker-toggle="false" datepicker-show="{{sc.visible.startDatePicker}}">
+            <div class="form_calendar" ng-click="sc.toggleCalendar(1)"></div>
+            <input class="form_date" ng-class="{'empty': !sc.flight.dateStart}"
+                type="text" name="dateStart" disabled placeholder="&leftarrow; start date..."
+                ng-model="sc.flight.dateStart" ng-change="sc.startDateChanged()" />
+        </datepicker>
+    </div>
     <div class="form_element">
         <datepicker date-format="{{sc.dateFormat}}" date-refocus="true" selector="form_date"
                 datepicker-toggle="false" datepicker-show="{{sc.visible.endDatePicker}}">
             <div class="form_calendar" ng-click="sc.toggleCalendar(2)"></div>
             <input class="form_date" ng-class="{'empty': !sc.flight.dateEnd}"
-                name="dateEnd" type="text" disabled placeholder="&leftarrow; choose date..."
+                name="dateEnd" type="text" disabled placeholder="&leftarrow; end date..."
                 ng-model="sc.flight.dateEnd" ng-change="sc.endDateChanged()" />
         </datepicker>
     </div>
   </div>
+
+  <div class="form_error" ng-if="sc.error.dateStart">{{sc.error.dateStart}}</div>
+  <div class="form_error" ng-if="sc.error.dateEnd">{{sc.error.dateEnd}}</div>
 
   <div class="form_group center-content">
     <a class="form_button" type="submit" ng-click="sc.go()" value="Search">

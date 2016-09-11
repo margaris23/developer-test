@@ -12,9 +12,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 415px;
-    border: 1px solid @common-blue-color;
-    box-shadow: 1px 1px 3px @button-secondary-color;
+    max-width: 340px;
+    //border: 1px solid @common-blue-color;
+    //box-shadow: 1px 1px 3px @button-secondary-color;
     border-radius: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -26,12 +26,12 @@
         align-items: center;
 
         margin-left: 15px;
+        margin-top: 10px;
         min-width: 400px;
 
         .form_element {
-            flex: 1 0 200px;
-            max-width: 200px;
-            margin: 5px;
+            flex: 1 0;
+            margin: 5px 10px 10px 0;
 
             .form_date {
                 border: none;
@@ -45,7 +45,7 @@
 
                 &.empty {
                     opacity: 1;
-                    border: none;
+                    border-bottom: 1px solid #ffffff;
                 }
             }
 
@@ -61,6 +61,16 @@
         &.center-content {
             justify-content: center;
         }
+    }
+
+    .form_error {
+        color: red;
+        font-style: italic;
+        border-bottom: 1px solid red;
+        border-bottom-left-radius: 3px;
+        margin-top: -10px;
+        font-size: 0.9em;
+        border-bottom-right-radius: 3px;
     }
 
     .form_button {
@@ -84,7 +94,7 @@
         color: #ffffff;
         font-size: 20px;
 
-        margin: 5px;
+        margin: 10px 5px;
         padding: 10px 15px 10px 15px;
         text-decoration: none;
 
