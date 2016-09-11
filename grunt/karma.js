@@ -1,6 +1,8 @@
 //jshint strict: false
 module.exports = {
   unit: {
-    configFile: 'karma.conf.js'
+    configFile: 'karma.conf.js',
+    singleRun: false,
+    autoWatch: true,
   }
 };

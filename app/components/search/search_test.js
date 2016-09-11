@@ -3,10 +3,9 @@ describe('myApp.search module', function() {
 
   beforeEach(module('myApp.search'));
 
-  describe('search controller', function(){
+  describe('search module', function(){
 
-    it('should ....', inject(function($controller) {
-      //spec body
+    it('should validate controller existence', inject(function($controller) {
       var searchCtrl = $controller('SearchCtrl');
       expect(searchCtrl).toBeDefined();
     }));
