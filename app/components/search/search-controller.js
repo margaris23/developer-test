@@ -1,6 +1,6 @@
 angular.module('myApp.search.controller', ['myApp.search.service'])
 
-.controller('SearchCtrl', ['SearchSvc', function (SearchSvc) {
+.controller('SearchCtrl', ['SearchSvc', '$location', function (SearchSvc, $location) {
     var vm = this;
 
     vm.flight = {
@@ -10,16 +10,34 @@ angular.module('myApp.search.controller', ['myApp.search.service'])
         dateEnd: null
     };
 
+    vm.dateFormat = 'yyyy-MM-dd';
+
     vm.airports = [];
     vm.routes = [];
 
-    function stripSlashes(strDate) {
-        return strDate.replace(/\//g, '');
+    function stripDashes(strDate) {
+        return strDate.replace(/-/g, '');
+    }
+
+    function constructUrlParams() {
+        return [
+            'from=' + vm.flight.origin,
+            'to=' + vm.flight.destination,
+            'start=' + vm.flight.dateStart,
+            'end=' + vm.flight.dateEnd
+        ].join('&');
     }
 
     vm.go = function () {
-        console.log(vm.form);
-        // TBD...
+        if (!vm.flight.origin ||
+            !vm.flight.destination ||
+            !vm.flight.dateStart ||
+            !vm.flight.dateEnd) {
+            // TODO: show errors
+            return;
+        }
+
+        $location.path('/results?' + constructUrlParams());
     };
 
     vm.getOrigins = function (searchValue) {
@@ -56,8 +74,8 @@ angular.module('myApp.search.controller', ['myApp.search.service'])
 
         // TODO: validate date
 
-        var startDate = stripSlashes(vm.flight.dateStart);
-        var endDate = stripSlashes(vm.flight.dateEnd);
+        var startDate = stripDashes(vm.flight.dateStart);
+        var endDate = stripDashes(vm.flight.dateEnd);
 
         if (startDate > endDate) {
             vm.flight.dateEnd = vm.flight.dateStart;
@@ -71,8 +89,8 @@ angular.module('myApp.search.controller', ['myApp.search.service'])
 
         // TODO: validate date
 
-        var endDate = stripSlashes(vm.flight.dateEnd);
-        var startDate = stripSlashes(vm.flight.dateStart);
+        var endDate = stripDashes(vm.flight.dateEnd);
+        var startDate = stripDashes(vm.flight.dateStart);
 
         if (endDate < startDate) {
             vm.flight.dateStart = vm.flight.dateEnd;

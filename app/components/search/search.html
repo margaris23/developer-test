@@ -14,7 +14,7 @@
     </ui-select>
 
     <div style="width:200px;">
-        <datepicker date-format="yyyy/MM/dd" date-refocus="true">
+        <datepicker date-format="{{sc.dateFormat}}" date-refocus="true">
             <input ng-model="sc.flight.dateStart" type="text" name="dateStart" ng-change="sc.startDateChanged()" />
         </datepicker>
     </div>
@@ -28,7 +28,7 @@
     </ui-select>
 
     <div style="width:200px;">
-        <datepicker date-format="yyyy/MM/dd" date-refocus="true">
+        <datepicker date-format="{{sc.dateFormat}}" date-refocus="true">
             <input name="dateEnd" ng-model="sc.flight.dateEnd" type="text" ng-change="sc.endDateChanged()" />
         </datepicker>
     </div>
