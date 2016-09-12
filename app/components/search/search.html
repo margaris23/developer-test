@@ -1,6 +1,6 @@
 <form class="form_search" name="sc.form" id="search" novalidate>
 
-  <h3>Find cheap flights</h3>
+  <h2>Find cheap flights</h2>
 
   <div class="form_group">
     <ui-select ng-model="sc.flight.origin.selected" theme="select2" class="form_element"
@@ -23,7 +23,7 @@
 
   <div class="form_group">
     <ui-select ng-model="sc.flight.destination.selected" theme="select2" search-enabled="false"
-            class="form_element" title="Flying to...">
+            class="form_element" title="Where do you want to go?">
         <ui-select-match placeholder="Flying to...">{{$select.selected.fullName}}</ui-select-match>
         <ui-select-choices repeat="route in sc.routes">
             <span ng-bind-html="route.name"></span> <span>({{route.code}})</span>
