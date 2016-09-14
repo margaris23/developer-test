@@ -10,5 +10,9 @@ describe('myApp.search module', function() {
       expect(searchCtrl).toBeDefined();
     }));
 
+    it('should validate service existence', inject(function(SearchSvc) {
+      expect(SearchSvc).toBeDefined();
+    }));
+
   });
 });

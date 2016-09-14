@@ -5,6 +5,6 @@ module.exports = {
     },
     karma: {
         files: ['app/**/*.js'],
-        tasks: ['karma:unit']
+        tasks: ['jshint', 'karma:unit']
     }
 };

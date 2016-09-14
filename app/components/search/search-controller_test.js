@@ -1,7 +1,7 @@
-describe('myApp.search module', function() {
+describe('myApp.search.controller module', function() {
   'use strict';
 
-  beforeEach(module('myApp.search'));
+  beforeEach(module('myApp.search.controller'));
 
   describe('search controller', function(){
 
