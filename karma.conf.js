@@ -12,11 +12,11 @@ module.exports = function(config) {
       'components/**/*.js'
     ],
 
-    autoWatch: true,
+    autoWatch: false,
 
     frameworks: ['jasmine'],
 
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
 
     plugins: [
       'karma-chrome-launcher',
